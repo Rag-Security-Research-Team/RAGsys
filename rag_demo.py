@@ -19,7 +19,9 @@ def init_rag(dataset_path):
     embedding_model = SentenceTransformer(embedding_model_name, device='cuda')
     reranker_model_name = "BAAI/bge-reranker-v2-m3"
     reranker = FlagEmbedding.FlagReranker(reranker_model_name, device='cuda')
-    llm = HfWrapper("Llama-3.1-8B-Instruct")
+    # llm = HfWrapper("Llama-3.1-8B-Instruct")
+    load_dotenv()
+    llm = OpenAiWrapper(model_name='deepseek-chat', api_url='https://api.deepseek.com/v1', api_key=DEEPSEEK_API)
     
     '''build rag system'''
     defaul_rag_save_name = "rag_database_"+ embedding_model_name.split('/')[-1] + '_' + '.'.join(dataset_path.split('/')[-1].split('.')[:-1])
